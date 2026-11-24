@@ -1,0 +1,112 @@
+
+> timetable-studio@0.1.0 dev
+> vite --host 127.0.0.1 --port 5173
+
+
+  [32m[1mVITE[22m v7.3.8[39m  [2mready in [0m[1m4352[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5173[22m/[39m
+[2m7:56:55 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m7:58:10 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m7:58:11 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m8:04:37 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m8:16:34 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m8:16:35 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/layout/AppHeader.jsx, /src/index.css[22m
+[2m8:16:36 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/masterData/SubjectsTab.jsx[22m
+[2m8:16:37 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/TimetableView.jsx[22m
+[2m8:17:53 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/masterData/MasterDataManager.jsx, /src/index.css[22m
+[2m8:28:07 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m8:28:08 am[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "xlsx" from "src/utils/exportUtils.js". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/M B Tech/Downloads/Time Table/src/utils/exportUtils.js[39m:440:30
+[33m  438 |  /** Generate and download the multi-tab workbook using the same payloads. */
+  439 |  export async function exportWorkbook(masterData, timetable) {
+  440 |    const module = await import('xlsx');
+      |                                ^
+  441 |    const XLSX = module.default ?? module;
+  442 |    const sheets = buildSheetPayloads(masterData, timetable);[39m
+[2m8:28:08 am[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "xlsx" from "src/utils/exportUtils.js". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/M B Tech/Downloads/Time Table/src/utils/exportUtils.js[39m:440:30
+[33m  438 |  /** Generate and download the multi-tab workbook using the same payloads. */
+  439 |  export async function exportWorkbook(masterData, timetable) {
+  440 |    const module = await import('xlsx');
+      |                                ^
+  441 |    const XLSX = module.default ?? module;
+  442 |    const sheets = buildSheetPayloads(masterData, timetable);[39m
+[2m8:28:08 am[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "xlsx" from "src/utils/exportUtils.js". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/M B Tech/Downloads/Time Table/src/utils/exportUtils.js[39m:440:30
+[33m  438 |  /** Generate and download the multi-tab workbook using the same payloads. */
+  439 |  export async function exportWorkbook(masterData, timetable) {
+  440 |    const module = await import('xlsx');
+      |                                ^
+  441 |    const XLSX = module.default ?? module;
+  442 |    const sheets = buildSheetPayloads(masterData, timetable);[39m
+      at TransformPluginContext._formatLog (file:///C:/Users/M%20B%20Tech/Downloads/Time%20Table/node_modules/vite/dist/node/chunks/config.js:29250:43)
+      at TransformPluginContext.error (file:///C:/Users/M%20B%20Tech/Downloads/Time%20Table/node_modules/vite/dist/node/chunks/config.js:29247:14)
+      at normalizeUrl (file:///C:/Users/M%20B%20Tech/Downloads/Time%20Table/node_modules/vite/dist/node/chunks/config.js:27370:18)
+      at async file:///C:/Users/M%20B%20Tech/Downloads/Time%20Table/node_modules/vite/dist/node/chunks/config.js:27428:32
+      at async Promise.all (index 2)
+      at async TransformPluginContext.transform (file:///C:/Users/M%20B%20Tech/Downloads/Time%20Table/node_modules/vite/dist/node/chunks/config.js:27396:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/M%20B%20Tech/Downloads/Time%20Table/node_modules/vite/dist/node/chunks/config.js:29048:14)
+      at async loadAndTransform (file:///C:/Users/M%20B%20Tech/Downloads/Time%20Table/node_modules/vite/dist/node/chunks/config.js:22914:26)
+      at async viteTransformMiddleware (file:///C:/Users/M%20B%20Tech/Downloads/Time%20Table/node_modules/vite/dist/node/chunks/config.js:24790:20)
+[2m8:28:22 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m8:28:44 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/export/ExportToolbar.jsx, /src/components/export/SheetsExportModal.jsx[22m
+[2m8:29:42 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32m✨ new dependencies optimized: [33mxlsx[32m[39m
+[2m8:29:42 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32m✨ optimized dependencies changed. reloading[39m
+[2m8:48:20 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/main.jsx[22m
+[2m8:48:21 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/TimetableView.jsx[22m
+[2m8:48:21 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m8:49:04 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/TimetableView.jsx[22m
+[2m8:50:58 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/TimetableView.jsx[22m
+[2m8:55:43 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/layout/AppHeader.jsx, /src/index.css[22m
+[2m8:55:44 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/export/SheetsExportModal.jsx[22m
+[2m8:59:30 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m9:00:11 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m9:08:40 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mindex.html[22m
+[2m9:18:59 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/masterData/FacultyTab.jsx[22m
+[2m9:19:00 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/masterData/SubjectsTab.jsx[22m
+[2m9:21:03 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/masterData/CsvImportControls.jsx[22m
+[2m9:23:59 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/masterData/CsvImportControls.jsx[22m
+[2m9:24:00 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/masterData/CsvImportControls.jsx[22m
+[2m9:28:10 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/masterData/CsvImportControls.jsx[22m
+[2m9:29:20 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/masterData/CsvImportControls.jsx[22m
+[2m9:29:21 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/masterData/RoomsTab.jsx[22m
+[2m9:34:36 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m9:38:35 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/export/ExportToolbar.jsx, /src/components/export/SheetsExportModal.jsx[22m
+[2m9:38:37 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32m✨ new dependencies optimized: [33mexceljs[32m[39m
+[2m9:38:37 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32m✨ optimized dependencies changed. reloading[39m
+[2m10:42:15 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/TimetableView.jsx[22m
+[2m10:42:29 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/TimetableView.jsx[22m
+[2m10:42:39 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/TimetableView.jsx[22m
+[2m10:43:06 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/TimetableView.jsx[22m
+[2m10:43:16 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/TimetableView.jsx[22m
+[2m10:43:30 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/TimetableView.jsx[22m
+[2m10:44:26 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/App.jsx[22m
+[2m10:44:49 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m10:45:14 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/TimetableView.jsx[22m
+[2m10:46:31 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/GeneratorBar.jsx[22m
+[2m10:46:32 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/ConflictReport.jsx[22m
+[2m10:46:39 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/DivisionGrid.jsx[22m
+[2m10:47:42 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/TimetableView.jsx[22m
+[2m10:48:17 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/masterData/DivisionsTab.jsx[22m
+[2m10:48:39 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/App.jsx[22m
+[2m10:48:40 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/App.jsx, /src/components/masterData/TimeGridTab.jsx, /src/components/masterData/RoomsTab.jsx, /src/components/masterData/SubjectsTab.jsx, /src/components/export/ExportToolbar.jsx, /src/components/export/SheetsExportModal.jsx, /src/components/masterData/CsvImportControls.jsx[22m
+[2m10:48:48 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/masterData/MasterDataManager.jsx, /src/index.css[22m
+[2m10:48:57 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/index.css[22m
+[2m10:49:08 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/export/ExportToolbar.jsx, /src/components/export/SheetsExportModal.jsx[22m
+[2m10:49:16 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/export/SheetsExportModal.jsx[22m
+[2m10:51:06 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:51:07 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:51:22 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:51:49 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/TimetableView.jsx, /src/components/timetable/DivisionGrid.jsx, /src/components/timetable/RoomGrid.jsx, /src/components/timetable/FacultyGrid.jsx, /src/components/timetable/GridTable.jsx[22m
+[2m10:51:50 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m10:58:24 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/SubstitutionModal.jsx[22m
+[2m10:58:25 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/SubstitutionModal.jsx[22m
+[2m10:58:59 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:01:00 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/SubstitutionModal.jsx[22m
+[2m11:01:10 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/timetable/SubstitutionModal.jsx[22m
+[2m11:01:30 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:10:28 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/export/ExportToolbar.jsx, /src/components/export/SheetsExportModal.jsx[22m

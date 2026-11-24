@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Timetable Studio calendar icon">
+  <defs>
+    <linearGradient id="tile" x1="6" y1="4" x2="58" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366f1" />
+      <stop offset="1" stop-color="#4338ca" />
+    </linearGradient>
+    <clipPath id="page">
+      <rect x="14" y="17" width="36" height="33" rx="5" />
+    </clipPath>
+  </defs>
+
+  <rect width="64" height="64" rx="14" fill="url(#tile)" />
+
+  <g clip-path="url(#page)">
+    <rect x="14" y="17" width="36" height="33" fill="#ffffff" />
+    <rect x="14" y="17" width="36" height="10" fill="#4338ca" />
+    <rect x="18" y="31" width="8" height="5" rx="1.2" fill="#4338ca" />
+    <rect x="28" y="31" width="8" height="5" rx="1.2" fill="#c7d2fe" />
+    <rect x="38" y="31" width="8" height="5" rx="1.2" fill="#f59e0b" />
+    <rect x="18" y="38" width="8" height="5" rx="1.2" fill="#c7d2fe" />
+    <rect x="28" y="38" width="8" height="5" rx="1.2" fill="#4338ca" />
+    <rect x="38" y="38" width="8" height="5" rx="1.2" fill="#c7d2fe" />
+  </g>
+
+  <rect x="22" y="11" width="4" height="9" rx="2" fill="#e0e7ff" />
+  <rect x="38" y="11" width="4" height="9" rx="2" fill="#e0e7ff" />
+</svg>

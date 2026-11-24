@@ -1,0 +1,3 @@
+﻿code,name,division,type,weeklyHours,facultyShortCode,requiredRoomType,b1Faculty,b2Faculty,b3Faculty,b4Faculty,electiveGroup
+DEMO101,Introduction to Engineering,SY,Theory,3,AKP,Classroom,,,,,
+DEMO101L,Engineering Practice Lab,SY,Practical,2,AKP,Lab,auto,auto,auto,auto,

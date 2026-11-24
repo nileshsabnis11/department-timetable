@@ -1,0 +1,11 @@
+export default function EmptyState({ title, description, action }) {
+  return (
+    <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 px-5 py-8 text-center">
+      <p className="text-sm font-semibold text-slate-700">{title}</p>
+      {description ? (
+        <p className="mx-auto mt-1 max-w-md text-xs text-slate-500">{description}</p>
+      ) : null}
+      {action ? <div className="mt-3">{action}</div> : null}
+    </div>
+  );
+}

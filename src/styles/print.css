@@ -1,0 +1,948 @@
+/*
+ * Phase 4B — print-only A4 landscape document styles.
+ *
+ * Everything here lives behind @media print except `.print-root`, which is
+ * hidden on screen. The app shell (#root) is hidden while printing, and the
+ * printable pages are portalled to <body> so modals, toolbars and clash
+ * banners can never leak into the printout.
+ */
+
+@page {
+  size: A4 landscape;
+  margin: 8mm;
+}
+
+/* The master wall chart prints on A3; every other page stays A4 landscape. */
+@page print-master {
+  size: A3 landscape;
+  margin: 8mm;
+}
+
+/* The analytics report is a portrait department record. */
+@page print-analytics {
+  size: A4 portrait;
+  margin: 10mm;
+}
+
+.print-root {
+  display: none;
+}
+
+@media print {
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #root {
+    display: none !important;
+  }
+
+  .print-root {
+    display: block !important;
+    color: #0f172a;
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 9px;
+    line-height: 1.25;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-page {
+    width: 100%;
+    max-width: 281mm;
+    margin: 0 auto;
+    padding: 0;
+    background: #ffffff;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .print-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  /* Faculty load summary bar ------------------------------------------------ */
+  .print-load-bar {
+    display: flex;
+    margin-top: 2mm;
+    border: 1px solid #1e293b;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-load-item {
+    flex: 1;
+    padding: 1.5mm 3mm;
+    border-left: 1px solid #1e293b;
+    text-align: center;
+  }
+
+  .print-load-item:first-child {
+    border-left: 0;
+    text-align: left;
+  }
+
+  .print-load-item:last-child {
+    text-align: right;
+  }
+
+  .print-load-label {
+    display: block;
+    color: #475569;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .print-load-value {
+    display: block;
+    color: #0f172a;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  /* Institutional header -------------------------------------------------- */
+  .print-doc-header {
+    margin-bottom: 3mm;
+    text-align: center;
+  }
+
+  .print-institute {
+    margin: 0;
+    color: #0f172a;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+
+  .print-department {
+    margin: 1px 0 0;
+    color: #1e293b;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .print-meta-bar {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    margin-top: 2.5mm;
+    border: 1px solid #1e293b;
+  }
+
+  .print-meta-item {
+    flex: 1;
+    padding: 2px 6px;
+    border-left: 1px solid #1e293b;
+    text-align: center;
+  }
+
+  .print-meta-item:first-child {
+    border-left: 0;
+    text-align: left;
+  }
+
+  .print-meta-item:last-child {
+    text-align: right;
+  }
+
+  .print-meta-label {
+    display: block;
+    color: #475569;
+    font-size: 6.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .print-meta-value {
+    display: block;
+    color: #0f172a;
+    font-size: 9px;
+    font-weight: 700;
+  }
+
+  /* Grid ------------------------------------------------------------------ */
+  .print-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  .print-table th,
+  .print-table td {
+    border: 1px solid #1e293b;
+  }
+
+  .print-grid {
+    font-size: 9px;
+  }
+
+  .print-grid thead th {
+    padding: 3px 2px;
+    background: #e2e8f0 !important;
+    color: #0f172a;
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .print-grid thead th.print-time-head {
+    width: 15%;
+    padding-left: 4px;
+    text-align: left;
+  }
+
+  .print-grid tbody td {
+    height: 36px;
+    padding: 2px 3px;
+    vertical-align: top;
+  }
+
+  .print-grid tbody th.print-time-cell {
+    width: 15%;
+    padding: 2px 4px;
+    background: #f1f5f9 !important;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .print-slot-label {
+    display: block;
+    color: #0f172a;
+    font-size: 8.5px;
+    font-weight: 700;
+  }
+
+  .print-slot-time {
+    display: block;
+    color: #475569;
+    font-size: 7px;
+    white-space: nowrap;
+  }
+
+  .print-grid .print-break-cell {
+    height: auto !important;
+    padding: 2px 4px !important;
+    background: #e2e8f0 !important;
+    color: #334155;
+    font-size: 7.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .print-cell-practical {
+    background: #f8fafc !important;
+  }
+
+  /* Parallel elective group: several options in one division slot ---------- */
+  .print-cell-elective {
+    background: #eef2ff !important;
+    vertical-align: top !important;
+  }
+
+  .print-electives {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .print-elective-label {
+    color: #3730a3;
+    font-size: 7.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .print-elective-line {
+    color: #1e293b;
+    font-size: 7px;
+    line-height: 1.2;
+  }
+
+  .print-master-table .print-elective-label,
+  .print-master-table .print-elective-line {
+    font-size: 6px;
+  }
+
+  /* Locked institutional blocks (Open Elective, Mentoring, Library, T&P) --- */
+  .print-cell-fixed {
+    background: #f5f3ff !important;
+    vertical-align: middle !important;
+    text-align: center;
+  }
+
+  .print-fixed-label {
+    color: #5b21b6;
+    font-size: 8px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .print-master-table .print-fixed-label {
+    font-size: 7px;
+  }
+
+  .print-subject-name {
+    color: #0f172a;
+    font-size: 8.5px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .print-subject-code {
+    color: #475569;
+    font-size: 7.5px;
+    font-weight: 600;
+  }
+
+  .print-cell-meta {
+    margin-top: 1px;
+    color: #475569;
+    font-size: 7px;
+    line-height: 1.2;
+  }
+
+  .print-batch-line {
+    color: #334155;
+    font-size: 7px;
+    line-height: 1.25;
+    white-space: nowrap;
+  }
+
+  .print-batch-line strong {
+    color: #0f172a;
+  }
+
+  /* Legend ---------------------------------------------------------------- */
+  .print-legend {
+    margin-top: 2.5mm;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-section-title {
+    margin: 0 0 1mm;
+    color: #334155;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .print-legend-table {
+    font-size: 7.5px;
+  }
+
+  .print-legend-table thead th {
+    padding: 2px 3px;
+    background: #e2e8f0 !important;
+    color: #0f172a;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .print-legend-table tbody td {
+    padding: 1.5px 3px;
+    vertical-align: top;
+  }
+
+  .print-legend-table tbody tr:nth-child(even) td {
+    background: #f8fafc !important;
+  }
+
+  .print-legend-empty {
+    color: #64748b;
+    font-style: italic;
+    text-align: center;
+  }
+
+  /* Signatures ------------------------------------------------------------ */
+  .print-signatures {
+    display: flex;
+    justify-content: space-between;
+    gap: 18mm;
+    margin-top: 6mm;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-signature {
+    flex: 1;
+    text-align: center;
+  }
+
+  .print-signature-line {
+    height: 7mm;
+    margin-bottom: 1.5mm;
+    border-bottom: 1px solid #1e293b;
+  }
+
+  .print-signature-label {
+    margin: 0;
+    color: #0f172a;
+    font-size: 8px;
+    font-weight: 700;
+  }
+
+  /* Master (A3) wall chart ------------------------------------------------ */
+  .print-page-master {
+    page: print-master;
+    max-width: none;
+  }
+
+  .print-master-table {
+    font-size: 7.5px;
+  }
+
+  .print-master-table thead th {
+    padding: 2px;
+    background: #e2e8f0 !important;
+    color: #0f172a;
+    font-size: 7.5px;
+    font-weight: 700;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .print-master-table .print-master-day-head {
+    width: 3%;
+  }
+
+  .print-master-table .print-master-class-head {
+    width: 4%;
+  }
+
+  .print-master-table .print-master-break-head {
+    background: #fef3c7 !important;
+    color: #92400e;
+  }
+
+  .print-master-time {
+    display: block;
+    color: #475569;
+    font-size: 6px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .print-master-table tbody td,
+  .print-master-table tbody th {
+    padding: 1.5px 2px;
+    vertical-align: middle;
+  }
+
+  .print-master-day-cell {
+    background: #f1f5f9 !important;
+    color: #0f172a;
+    font-size: 9px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .print-master-class-cell {
+    color: #0f172a;
+    font-size: 8px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .print-master-break-cell {
+    background: #fef3c7 !important;
+  }
+
+  .print-master-table .print-subject-name {
+    font-size: 8px;
+    font-weight: 700;
+  }
+
+  .print-master-table .print-subject-code {
+    font-size: 6.5px;
+    font-weight: 500;
+  }
+
+  .print-master-table .print-batch-line,
+  .print-master-table .print-cell-meta {
+    font-size: 6px;
+  }
+
+  /* Analytics report (A4 portrait) ---------------------------------------- */
+  .print-page-portrait {
+    page: print-analytics;
+    max-width: 190mm;
+  }
+
+  .print-analytics-kpis {
+    display: flex;
+    gap: 2mm;
+    margin: 0 0 4mm;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-kpi {
+    flex: 1;
+    padding: 2mm;
+    border: 1px solid #1e293b;
+    text-align: center;
+  }
+
+  .print-kpi-label {
+    display: block;
+    color: #475569;
+    font-size: 6.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .print-kpi-value {
+    display: block;
+    color: #0f172a;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .print-kpi-caption {
+    display: block;
+    color: #334155;
+    font-size: 6.5px;
+  }
+
+  .print-analytics-table {
+    margin-bottom: 4mm;
+    font-size: 7.5px;
+  }
+
+  .print-analytics-table thead th {
+    padding: 2px 3px;
+    background: #e2e8f0 !important;
+    color: #0f172a;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .print-analytics-table tbody td {
+    padding: 1.5px 3px;
+    vertical-align: top;
+  }
+
+  .print-analytics-table tbody tr:nth-child(even) td {
+    background: #f8fafc !important;
+  }
+
+  .print-center {
+    text-align: center;
+  }
+
+  .print-cell-strong {
+    color: #0f172a;
+    font-weight: 700;
+  }
+
+  .print-cell-muted {
+    color: #64748b;
+    font-size: 6.5px;
+  }
+
+  .print-free-blocks {
+    font-size: 6.5px;
+    line-height: 1.25;
+  }
+
+  .print-bar {
+    height: 3px;
+    margin-top: 1px;
+    background: #e2e8f0;
+  }
+
+  .print-bar-fill {
+    display: block;
+    height: 3px;
+    background: #4338ca;
+  }
+
+  .print-analytics-note {
+    margin: 0 0 2mm;
+    color: #475569;
+    font-size: 7px;
+    font-style: italic;
+  }
+
+  /* Substitution traceability --------------------------------------------- */
+  .print-sub-note {
+    margin-top: 1px;
+    color: #b91c1c;
+    font-size: 6.5px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .print-doc-note {
+    margin: 2mm 0 0;
+    color: #b91c1c;
+    font-size: 7px;
+    font-style: italic;
+  }
+
+  tr,
+  th,
+  td {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
+/* Workload statements, department cover and batch slips ------------------- */
+@media print {
+  .print-footer {
+    margin-top: 4mm;
+    border-top: 1px solid #cbd5e1;
+    padding-top: 1.5mm;
+    color: #64748b;
+    font-size: 7px;
+    text-align: center;
+  }
+
+  /* Department report cover ---------------------------------------------- */
+  .print-cover-title {
+    margin: 10mm 0 2mm;
+    color: #0f172a;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .print-cover-copy {
+    margin: 0 auto 6mm;
+    max-width: 150mm;
+    color: #334155;
+    font-size: 9px;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .print-cover-kpis {
+    display: flex;
+    gap: 3mm;
+    margin-bottom: 8mm;
+  }
+
+  .print-cover-kpis > div {
+    flex: 1;
+    border: 1px solid #1e293b;
+    padding: 3mm;
+    text-align: center;
+  }
+
+  .print-cover-kpis span {
+    display: block;
+    color: #475569;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .print-cover-kpis strong {
+    display: block;
+    margin: 1mm 0;
+    color: #0f172a;
+    font-size: 18px;
+  }
+
+  .print-cover-kpis small {
+    color: #64748b;
+    font-size: 7px;
+  }
+
+  .print-cover-divisions {
+    margin-top: 6mm;
+  }
+
+  .print-cover-divisions h3 {
+    margin: 0 0 1.5mm;
+    color: #0f172a;
+    font-size: 10px;
+  }
+
+  .print-cover-divisions ul {
+    margin: 0;
+    padding-left: 5mm;
+    color: #334155;
+    font-size: 9px;
+  }
+
+  /* Faculty workload statement ------------------------------------------- */
+  .print-workload-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2mm;
+    margin: 0 0 3mm;
+    border: 1px solid #1e293b;
+    padding: 2mm 3mm;
+    font-size: 8px;
+  }
+
+  .print-workload-summary span {
+    margin-right: 4mm;
+    color: #334155;
+  }
+
+  .print-workload-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8px;
+  }
+
+  .print-workload-table thead th {
+    border: 1px solid #1e293b;
+    padding: 1.5mm 1.5mm;
+    background: #e2e8f0 !important;
+    color: #0f172a;
+    font-size: 7.5px;
+    text-align: left;
+  }
+
+  .print-workload-table tbody td {
+    border: 1px solid #cbd5e1;
+    padding: 1.2mm 1.5mm;
+    vertical-align: top;
+  }
+
+  .print-workload-table .num {
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .print-workload-signatures {
+    display: flex;
+    justify-content: space-between;
+    gap: 18mm;
+    margin-top: 10mm;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-empty {
+    margin: 6mm 0;
+    color: #64748b;
+    font-size: 9px;
+    font-style: italic;
+    text-align: center;
+  }
+
+  /* =========================================================================
+     RIT Institutional 20-Column Layout (A4 Landscape)
+     ========================================================================= */
+  .print-doc-header-rit {
+    margin-bottom: 2mm;
+    text-align: center;
+    position: relative;
+  }
+
+  .print-rit-rev {
+    text-align: right;
+    font-size: 7.5px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 1px;
+  }
+
+  .print-rit-society {
+    font-size: 8.5px;
+    color: #000;
+  }
+
+  .print-rit-institute {
+    margin: 1px 0;
+    color: #000;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+  }
+
+  .print-rit-dept {
+    margin: 1px 0;
+    color: #000;
+    font-size: 9.5px;
+    font-style: italic;
+    font-weight: bold;
+  }
+
+  .print-rit-title {
+    margin: 1px 0;
+    color: #000;
+    font-size: 11px;
+    font-weight: bold;
+  }
+
+  .print-rit-term {
+    margin: 1px 0 2px;
+    color: #000;
+    font-size: 8.5px;
+    font-weight: bold;
+  }
+
+  .print-rit-staff {
+    text-align: left;
+    font-size: 9px;
+    font-weight: bold;
+    color: #000;
+    margin-top: 1.5mm;
+  }
+
+  .print-rit-workload {
+    margin-bottom: 2mm;
+  }
+
+  .print-workload-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 7.5px;
+    border: 1px solid #000;
+  }
+
+  .print-workload-table td {
+    border: 1px solid #000 !important;
+    padding: 1.5px 3px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+
+  .print-grid-20col {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 7.5px;
+  }
+
+  .print-grid-20col th,
+  .print-grid-20col td {
+    border: 1px solid #000 !important;
+    padding: 1.5px 2px;
+    text-align: center;
+    vertical-align: middle;
+    word-break: break-word;
+    line-height: 1.15;
+  }
+
+  .print-grid-20col thead th {
+    background: #1e293b !important;
+    color: #ffffff !important;
+    font-weight: bold;
+    font-size: 7.5px;
+    padding: 2px 1px;
+  }
+
+  .print-cell-pr {
+    background: #fef08a !important;
+    color: #000000 !important;
+  }
+
+  .print-cell-th {
+    background: #dbeafe !important;
+    color: #000000 !important;
+  }
+
+  .print-break-cell-rit {
+    background: #fef3c7 !important;
+    color: #92400e !important;
+    font-weight: bold;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2.5px 0 !important;
+  }
+
+  .print-buffer-row td {
+    height: 14px;
+    background: #ffffff !important;
+  }
+
+  .print-legend-rit {
+    margin-top: 2.5mm;
+    break-inside: avoid;
+  }
+
+  .print-legend-title {
+    font-size: 8.5px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 1mm;
+    text-align: left;
+  }
+
+  .print-legend-table-rit {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 7.5px;
+  }
+
+  .print-legend-table-rit th,
+  .print-legend-table-rit td {
+    border: 1px solid #000 !important;
+    padding: 1.5px 3px;
+  }
+
+  .print-legend-table-rit thead th {
+    background: #1e293b !important;
+    color: #ffffff !important;
+    font-weight: bold;
+    font-size: 7.5px;
+    text-align: center;
+  }
+
+  .print-legend-table-rit tbody tr:nth-child(even) td {
+    background: #f8fafc !important;
+  }
+
+  .print-signatures-rit {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6mm;
+    padding: 0 15mm;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-sig-col {
+    width: 25%;
+    text-align: center;
+  }
+
+  .print-sig-rule {
+    border-top: 1px solid #000;
+    height: 1px;
+    margin-bottom: 2mm;
+  }
+
+  .print-sig-name {
+    margin: 0;
+    font-size: 9px;
+    font-weight: bold;
+    color: #000;
+  }
+}
