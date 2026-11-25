@@ -8,6 +8,7 @@ import ProxyManager from './components/proxy/ProxyManager';
 import AnalyticsDashboard from './components/analytics/AnalyticsDashboard';
 import PublishModal from './components/public/PublishModal';
 import PublicPortal from './components/public/PublicPortal';
+import CoordinatorLoginGate from './components/public/CoordinatorLoginGate';
 import { useMasterData } from './hooks/useMasterData';
 import {
   activateSemester,
@@ -49,7 +50,7 @@ const VIEWS = [
  * One semester's working session. Mounted fresh (by key) whenever the loaded
  * semester changes so every existing store re-reads its localStorage keys.
  */
-function Studio({ readOnly, semester, semesterControls, onUnarchive }) {
+function Studio({ readOnly, semester, semesterControls, onUnarchive, onLock }) {
   const {
     data,
     notice,
@@ -94,6 +95,7 @@ function Studio({ readOnly, semester, semesterControls, onUnarchive }) {
         onLoadSample={handleLoadSample}
         onReset={handleReset}
         onOpenPublish={() => setPublishOpen(true)}
+        onLock={onLock}
         disabled={readOnly}
         semesterControls={semesterControls}
       />
@@ -282,7 +284,7 @@ function Studio({ readOnly, semester, semesterControls, onUnarchive }) {
   );
 }
 
-function CoordinatorApp() {
+function CoordinatorApp({ onLock }) {
   const [semesterState, setSemesterState] = useState(loadSemesterState);
   const [manageOpen, setManageOpen] = useState(false);
   const [sessionKey, setSessionKey] = useState(0);
@@ -354,6 +356,7 @@ function CoordinatorApp() {
         key={sessionKey}
         readOnly={readOnly}
         semester={activeSemester}
+        onLock={onLock}
         onUnarchive={() => {
           if (activeSemester) handleToggleStatus(activeSemester.id);
         }}
@@ -376,6 +379,8 @@ function CoordinatorApp() {
   );
 }
 
+const COORDINATOR_SESSION_KEY = 'timetable-studio.coordinator-unlocked';
+
 export default function App() {
   const searchParams =
     typeof window !== 'undefined'
@@ -387,6 +392,40 @@ export default function App() {
     typeof window !== 'undefined' &&
     (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
+  const [coordinatorUnlocked, setCoordinatorUnlocked] = useState(() => {
+    try {
+      return (
+        typeof window !== 'undefined' &&
+        window.sessionStorage?.getItem(COORDINATOR_SESSION_KEY) === 'true'
+      );
+    } catch {
+      return false;
+    }
+  });
+
+  const handleUnlock = useCallback(() => {
+    try {
+      window.sessionStorage?.setItem(COORDINATOR_SESSION_KEY, 'true');
+    } catch {
+      // ignore storage errors
+    }
+    setCoordinatorUnlocked(true);
+  }, []);
+
+  const handleLock = useCallback(() => {
+    try {
+      window.sessionStorage?.removeItem(COORDINATOR_SESSION_KEY);
+    } catch {
+      // ignore storage errors
+    }
+    setCoordinatorUnlocked(false);
+    if (typeof window !== 'undefined' && window.location.search.includes('admin=true')) {
+      const nextUrl = new URL(window.location.href);
+      nextUrl.searchParams.delete('admin');
+      window.location.href = nextUrl.toString();
+    }
+  }, []);
+
   // When ?admin=true is present, or when running on localhost without ?view=public, open Coordinator Mode.
   // In production (or with ?view=public), default to the clean read-only PublicPortal.
   const showCoordinator = isAdmin || (isLocalhost && !isPublicView);
@@ -395,5 +434,10 @@ export default function App() {
     return <PublicPortal />;
   }
 
-  return <CoordinatorApp />;
+  // On non-localhost (production), gate Coordinator Mode behind a passcode login screen.
+  if (!isLocalhost && !coordinatorUnlocked) {
+    return <CoordinatorLoginGate onUnlock={handleUnlock} />;
+  }
+
+  return <CoordinatorApp onLock={!isLocalhost ? handleLock : undefined} />;
 }

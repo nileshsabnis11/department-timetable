@@ -68,7 +68,12 @@ export function getPublicCache() {
   if (!hasStorage()) return null;
   try {
     const raw = window.localStorage.getItem(PUBLIC_CACHE_STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && (parsed.masterData || parsed.timetable) && parsed.status !== 'empty') {
+        return parsed;
+      }
+    }
 
     // Fallback: If coordinator has master data locally (e.g. on localhost or during initial run),
     // provide an initial snapshot so the portal can be inspected right away.
@@ -177,12 +182,13 @@ export async function publishLiveTimetable({
   try {
     result = JSON.parse(responseText);
   } catch {
-    // In case the script responded with plain text
-    result = { ok: true, raw: responseText };
+    throw new Error(
+      'Unexpected response from Apps Script. Make sure the Web App is deployed as "Anyone" and returns JSON.',
+    );
   }
 
-  if (result?.error) {
-    throw new Error(String(result.error));
+  if (result?.error || result?.status === 'error') {
+    throw new Error(String(result.error || result.message || 'Publish failed.'));
   }
 
   // Update local public cache immediately so preview loads instantly
@@ -232,16 +238,18 @@ export async function fetchLiveTimetable(scriptUrl) {
     const text = await response.text();
     const parsed = JSON.parse(text);
 
-    if (parsed?.error) {
-      if (cached) return cached;
-      throw new Error(String(parsed.error));
+    if (parsed?.error || parsed?.status === 'error' || parsed?.status === 'empty') {
+      if (cached && cached.masterData) return cached;
+      throw new Error(
+        String(parsed.error || parsed.message || 'No live timetable has been published yet.'),
+      );
     }
 
     // Normalise if Apps Script returns { ok: true, data: { ... } } or directly { ... }
     const snapshot = parsed?.data ? parsed.data : parsed;
-    if (!snapshot || typeof snapshot !== 'object') {
-      if (cached) return cached;
-      throw new Error('Invalid timetable data received from server.');
+    if (!snapshot || typeof snapshot !== 'object' || (!snapshot.masterData && !snapshot.timetable)) {
+      if (cached && cached.masterData) return cached;
+      throw new Error('No live timetable has been published yet.');
     }
 
     savePublicCache(snapshot);
@@ -252,6 +260,76 @@ export async function fetchLiveTimetable(scriptUrl) {
     }
     throw err;
   }
+}
+
+/**
+ * Verify a Coordinator passcode before unlocking Coordinator Mode in production.
+ * 1. If VITE_COORDINATOR_PASSCODE is set at build time, verifies against it.
+ * 2. Otherwise verifies against the Google Apps Script Web App (`action: 'verify'`).
+ *
+ * @param {string} passcode
+ * @param {string} [scriptUrl]
+ */
+export async function verifyCoordinatorPasscode(passcode, scriptUrl) {
+  const trimmed = String(passcode ?? '').trim();
+  if (!trimmed) {
+    throw new Error('Please enter the coordinator passcode.');
+  }
+
+  const envPasscode =
+    typeof import.meta !== 'undefined' && import.meta.env?.VITE_COORDINATOR_PASSCODE
+      ? String(import.meta.env.VITE_COORDINATOR_PASSCODE).trim()
+      : '';
+
+  if (envPasscode) {
+    if (trimmed === envPasscode) {
+      savePublishKey(trimmed);
+      return { ok: true };
+    }
+    throw new Error('Incorrect coordinator passcode.');
+  }
+
+  const targetUrl = (scriptUrl || getDefaultScriptUrl()).trim();
+  if (!targetUrl) {
+    throw new Error(
+      'Coordinator login is not configured. Set VITE_COORDINATOR_PASSCODE or VITE_APPS_SCRIPT_URL.',
+    );
+  }
+
+  let response;
+  try {
+    response = await fetch(targetUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'verify', publishKey: trimmed }),
+      redirect: 'follow',
+    });
+  } catch {
+    throw new Error('Could not reach the verification server. Check your internet connection.');
+  }
+
+  if (!response.ok) {
+    throw new Error(`Verification failed (HTTP ${response.status}).`);
+  }
+
+  const text = await response.text().catch(() => '');
+  let result = null;
+  try {
+    result = JSON.parse(text);
+  } catch {
+    throw new Error('Unexpected response from Apps Script verification endpoint.');
+  }
+
+  if (result?.error || result?.status === 'error') {
+    throw new Error(String(result.error || result.message || 'Incorrect coordinator passcode.'));
+  }
+
+  if (!result?.ok && result?.status !== 'ok' && result?.status !== 'success') {
+    throw new Error('Could not verify coordinator passcode.');
+  }
+
+  savePublishKey(trimmed);
+  return { ok: true };
 }
 
 /**
@@ -282,6 +360,25 @@ function doPost(e) {
   try {
     var contents = e.postData.contents;
     var payload = JSON.parse(contents);
+
+    // 0. Coordinator Passcode Verification Action
+    if (payload.action === 'verify') {
+      var props = PropertiesService.getScriptProperties();
+      var expectedPasscode = props.getProperty('PUBLISH_KEY');
+      if (!expectedPasscode) {
+        return ContentService.createTextOutput(JSON.stringify({
+          error: "PUBLISH_KEY is not configured in Apps Script Script Properties."
+        })).setMimeType(ContentService.MimeType.JSON);
+      }
+      if (payload.publishKey !== expectedPasscode) {
+        return ContentService.createTextOutput(JSON.stringify({
+          error: "Incorrect coordinator passcode."
+        })).setMimeType(ContentService.MimeType.JSON);
+      }
+      return ContentService.createTextOutput(JSON.stringify({
+        ok: true
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
 
     // 1. Live Timetable Publish Action
     if (payload.action === 'publish') {

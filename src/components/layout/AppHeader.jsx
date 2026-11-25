@@ -4,6 +4,7 @@ export default function AppHeader({
   onLoadSample,
   onReset,
   onOpenPublish,
+  onLock,
   disabled = false,
   semesterControls,
 }) {
@@ -38,6 +39,15 @@ export default function AppHeader({
                 className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm flex items-center gap-1.5 font-semibold"
               >
                 <span>🌐</span> Publish Live Site
+              </Button>
+            ) : null}
+            {onLock ? (
+              <Button
+                variant="secondary"
+                onClick={onLock}
+                title="Lock Coordinator Mode and return to Public Portal"
+              >
+                🔒 Lock
               </Button>
             ) : null}
           </div>
